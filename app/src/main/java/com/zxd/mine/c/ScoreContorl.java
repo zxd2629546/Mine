@@ -100,4 +100,8 @@ public class ScoreContorl {
     public void reset(){
         initScore();
     }
+
+    public int getScore() {
+        return score;
+    }
 }

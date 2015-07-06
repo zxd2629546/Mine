@@ -1,6 +1,8 @@
 package com.zxd.mine.c;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +15,12 @@ import com.zxd.mine.R;
 /**
  * Created by zxd on 2015/7/3.
  */
-public class MineFiledAdapter extends BaseAdapter{
+public class MineFieldAdapter extends BaseAdapter{
     private MineField field;
     private GridView gridView;
     private Context context;
 
-    public MineFiledAdapter(MineField field, GridView gridView, Context context){
+    public MineFieldAdapter(MineField field, GridView gridView, Context context){
         super();
         this.gridView = gridView;
         this.context = context;
@@ -47,25 +49,28 @@ public class MineFiledAdapter extends BaseAdapter{
             convertView = LayoutInflater.from(context).inflate(R.layout.mine_block, null);
         }
         ImageView block = (ImageView)convertView.findViewById(R.id.mine_block);
-        block.setImageResource(getRes(getItem(position), field.getShown(position)));
-//        AbsListView.LayoutParams param = new AbsListView.LayoutParams(
-//                gridView.getWidth() / field.getMap().getMapWidth(),
-//                gridView.getWidth() / field.getMap().getMapWidth());
-//        convertView.setLayoutParams(param);
-//        convertView.setPadding(0, 0, 0, 0);
+        int id = getRes(getItem(position), field.getShown(position));
+        if (id != 0){
+            block.setImageResource(id);
+        } else {
+            block.setImageDrawable(new BitmapDrawable());
+        }
+        if (field.isMine(position)){
+            block.setBackgroundColor(Color.parseColor("#40e0d0"));
+        } else {
+            block.setBackgroundColor(Color.parseColor("#d3d3d3"));
+        }
         return convertView;
     }
 
     private int getRes(int value, boolean shown){
         int id = 0;
         if(!shown){
-            id = R.drawable.i00;
+            id = R.drawable.block;
         } else if(value == -1){
-            id = R.drawable.i12;
-        } else if(value == 0){
-            id = R.drawable.i09;
-        } else {
-            id = context.getResources().getIdentifier("i0" + value, "drawable", context.getPackageName());
+            id = R.drawable.mine;
+        } else if(value > 0){
+            id = context.getResources().getIdentifier("num_" + value, "drawable", context.getPackageName());
         }
         return id;
     }

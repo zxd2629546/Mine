@@ -68,9 +68,9 @@ public class MineMapGenerator {
         int value = map.getValue(corrdinate), sum = 0;
         field[corrdinate.x][corrdinate.y] = true;
         if(value == 0){
-            for (int i = 0;i < MineMap.DIRECT4.length;i ++){
-                int x = MineMap.DIRECT4[i][0] + corrdinate.x;
-                int y = MineMap.DIRECT4[i][1] + corrdinate.y;
+            for (int i = 0;i < MineMap.DIRECT8.length;i ++){
+                int x = MineMap.DIRECT8[i][0] + corrdinate.x;
+                int y = MineMap.DIRECT8[i][1] + corrdinate.y;
                 if (map.hasBlock(x, y) && !field[x][y] && map.getValue(x, y) >= 0) {
                     sum += update(new MineCorrdinate(x, y), field);
                 }

@@ -52,6 +52,7 @@ public class MineField {
     public void reset(int[] scale){
         map = new MineMap(scale);
         generator.setMap(map);
+        numOfLeftMine = map.getNumOfMines();
         init();
     }
     public int update(MineCorrdinate corrdinate){
@@ -68,5 +69,15 @@ public class MineField {
     public MineCorrdinate Pos2Corrinate(int position){
         System.out.println(position + "%" + map.getMapWidth());
         return new MineCorrdinate(position / map.getMapWidth(), position % map.getMapWidth());
+    }
+
+    public boolean isMine(int x, int y){
+        return map.getValue(x, y) == -1;
+    }
+    public boolean isMine(int position){
+        return map.getValue(position) == -1;
+    }
+    public boolean isNone(int position){
+        return map.getValue(position) == 0;
     }
 }
